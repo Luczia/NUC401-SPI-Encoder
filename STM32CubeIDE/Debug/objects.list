@@ -1,5 +1,7 @@
 "Application/User/Core/IcHausMu.o"
+"Application/User/Core/application.o"
 "Application/User/Core/as5048a.o"
+"Application/User/Core/cpp_link.o"
 "Application/User/Core/encoder.o"
 "Application/User/Core/main.o"
 "Application/User/Core/stm32f4xx_hal_msp.o"

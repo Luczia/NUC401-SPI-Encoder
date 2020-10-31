@@ -1,6 +1,6 @@
-Application/User/Core/main.o: \
- C:/Users/Luczia/STM32CubeIDE/workspace_1.3.0/oxio_esc/CubeMx_SPI_AS5048/Core/Src/main.c \
- ../../Core/Inc/main.h \
+Application/User/Core/cpp_link.o: \
+ C:/Users/Luczia/STM32CubeIDE/workspace_1.3.0/oxio_esc/CubeMx_SPI_AS5048/Core/Src/cpp_link.cpp \
+ ../../Core/Inc/cpp_link.hpp \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../../Core/Inc/stm32f4xx_hal_conf.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -28,9 +28,9 @@ Application/User/Core/main.o: \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../../Core/Inc/cpp_link.hpp
+ ../../Core/Inc/application.hpp
 
-../../Core/Inc/main.h:
+../../Core/Inc/cpp_link.hpp:
 
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 
@@ -86,4 +86,4 @@ Application/User/Core/main.o: \
 
 ../../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-../../Core/Inc/cpp_link.hpp:
+../../Core/Inc/application.hpp:

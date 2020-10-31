@@ -6,13 +6,10 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  Debug program to test the SPI communication with AS5048 and icMU with DWT (µs dalay)
+  * and cpp compilation in root mode (file system compatible with MC-SDK).
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+
   *
   ******************************************************************************
   */
@@ -22,7 +19,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stm32f4xx_hal.h"
+#include "cpp_link.hpp"
+#include "stdio.h"
+#include "stdarg.h"
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,7 +63,33 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#ifdef __GNUC__
+	#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+	#define PUTCHAR_PROTOTYPE int std::fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
 
+/**
+ * @brief Retargets the C library printf function to the USART.
+ * @param None
+ * @retval None
+ */
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
+		PUTCHAR_PROTOTYPE
+		{
+		 /* Place your implementation of fputc here */
+		 /* e.g. write a character to the USART2 and Loop until the end of transmission */
+		 HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+
+		return ch;
+		}
+
+#ifdef __cplusplus
+}
+#endif
 /* USER CODE END 0 */
 
 /**
@@ -97,7 +124,7 @@ int main(void)
   MX_SPI2_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  cpp_link(&hspi2);
   /* USER CODE END 2 */
 
   /* Infinite loop */

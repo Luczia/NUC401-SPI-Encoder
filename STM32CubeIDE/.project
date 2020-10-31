@@ -134,9 +134,19 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/IcHausMu.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/Core/application.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/application.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/Core/as5048a.cpp</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/as5048a.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/Core/cpp_link.cpp</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/cpp_link.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/Core/encoder.cpp</name>
@@ -144,9 +154,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/encoder.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/Core/main.cpp</name>
+			<name>Application/User/Core/main.c</name>
 			<type>1</type>
-			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/Core/Src/main.cpp</locationURI>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/Core/Src/main.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/Core/stm32f4xx_hal_msp.c</name>

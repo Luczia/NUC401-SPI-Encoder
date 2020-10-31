@@ -1,0 +1,9 @@
+application.cpp:110:6:void ChangeCS(bool)	8	static
+application.cpp:119:6:void TransferIcMU(unsigned char*, unsigned char*, unsigned int)	16	static
+application.cpp:124:1:void __static_initialization_and_destruction_0(int, int)	8	static
+application.cpp:64:6:void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef*)	8	static
+application.cpp:72:6:void encoder_init_ichaus(uint8_t*)	16	static
+application.cpp:90:9:uint8_t read_pos_ichaus(uint16_t*)	16	static
+application.cpp:102:6:void trig_non_blocking_ichaus_pos_read()	8	static
+application.cpp:32:6:void application_main(SPI_HandleTypeDef*)	8	static
+application.cpp:124:1:cpp)	8	static
