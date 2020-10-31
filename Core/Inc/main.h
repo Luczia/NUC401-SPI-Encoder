@@ -54,6 +54,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+void trig_non_blocking_ichaus_pos_read();
 void encoder_init_ichaus(uint8_t* init_seq);
 uint8_t read_pos_ichaus(uint16_t* pos);
 void TransferIcMU(unsigned char* const txBuffer, unsigned char* rxBuffer, const unsigned int bufferLen);

@@ -6,8 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * Debug program to test the SPI communication with AS5048 and icMU with DWT (µs dalay)
-  * and cpp compilation in root mode (file system compatible with MC-SDK).
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -15,16 +20,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32f4xx_hal.h"
-#include "stdio.h"
-#include "stdarg.h"
-#include "string.h"
-#include "as5048a.h"
-#include "icHausMu.hpp"
-#include "dwt_delay.h"
 
 /* USER CODE END Includes */
 
@@ -50,14 +47,6 @@ DMA_HandleTypeDef hdma_spi2_rx;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-// Global flags
-
-//Ic Haus
-uint8_t init_seq[6];
-
-uint8_t spi_tx[4] = {0xA6,0x00,0x00,0x00};
-uint8_t spi_rx[4] = {0x00,0x00,0x00,0x00};
-uint16_t positionICMU = 0x0000;
 
 /* USER CODE END PV */
 
@@ -74,36 +63,6 @@ static void MX_USART2_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-AS5048A angleSensor(&hspi2, SPI2_AS5048_CS_GPIO_Port, SPI2_AS5048_CS_Pin);
-IcHausMu ichausmu_enc(ICHAUSMU_HW_REV);
-
-#ifdef __GNUC__
-	#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-	#define PUTCHAR_PROTOTYPE int std::fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
-
-/**
- * @brief Retargets the C library printf function to the USART.
- * @param None
- * @retval None
- */
-#ifdef __cplusplus
- extern "C" {
-#endif
-
-		PUTCHAR_PROTOTYPE
-		{
-		 /* Place your implementation of fputc here */
-		 /* e.g. write a character to the USART2 and Loop until the end of transmission */
-		 HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
-
-		return ch;
-		}
-
-#ifdef __cplusplus
-}
-#endif
 /* USER CODE END 0 */
 
 /**
@@ -113,9 +72,6 @@ IcHausMu ichausmu_enc(ICHAUSMU_HW_REV);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	//AS 5048
-	uint16_t zero_position;
-	float zero_position_map;
 
   /* USER CODE END 1 */
 
@@ -127,6 +83,7 @@ int main(void)
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
+
   /* Configure the system clock */
   SystemClock_Config();
 
@@ -139,82 +96,17 @@ int main(void)
   MX_DMA_Init();
   MX_SPI2_Init();
   MX_USART2_UART_Init();
-
   /* USER CODE BEGIN 2 */
-  DWT_Init();  // Init the Data Watchpoint and Trace Unit on TIM4 to enable delays in µs
-
-  //
-  //Init AS5048
-  /*zero_position = angleSensor.getRawRotation();
-  printf("Zero: %d\n", zero_position);
-  zero_position_map = angleSensor.read2angle(zero_position);
-  printf("Angle: %f\n", zero_position_map);*/
-
-  //Init IcMu
-  // Mode 0 - CPOL 0 - CPHA 0
-  // PRESCALER 18 - Frame lengh : 24 bits 90µs
-  ///Init Attach NSS and transfer functions to encoder;
-  ichausmu_enc.csFunctionAttach(ChangeCS);
-  ichausmu_enc.streamFunctionAttach(TransferIcMU);
-
-  //HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);
-  printf("IcMU Init\n");
-  encoder_init_ichaus(init_seq);
-  for(int i = 0; i < sizeof(init_seq); i++)
-        printf(" %d ,", init_seq[i]);
-  printf("\n");
-
-
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
-
-	  //***********// Read the AS5048
-	  //***********//
-	    /*  uint16_t current_angle= angleSensor.getRawRotation();
-	  	  float current_angle_map = angleSensor.read2angle(current_angle);
-	  	  float angle = current_angle_map - zero_position_map;
-	  	  angle = angleSensor.normalize(angle);
-	  	  printf("Current Angle: %d\nCurrent Angle Map: %f\nAngle: %f\n\n", current_angle, current_angle_map, angle);*/
-	  	//if (angleSensor.error()) { printf("ERROR: %d\n", angleSensor.getErrors());  }
-
-	  //**********// Read the iCMu
-	  //**********//
-	  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-
-//	  uint16_t pos = 28;
-//	  uint8_t status = read_pos_ichaus(&pos);
-	  trig_non_blocking_ichaus_pos_read();
-	  DWT_Delay(100);
-	  float posDeg = positionICMU*360/65536.0;
-	  //printf("Current Angle: %.3f | %d \n", posDeg, positionICMU);//, status);
-	  printf("%.3f \n", posDeg);//, status);
-/*	  spi_tx[0] = 0x97;
-	  spi_tx[1] = 0x74;
-	  HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_RESET);
-	  HAL_SPI_TransmitReceive(&hspi2, spi_tx, spi_rx, 2, 100);
-	  HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);
-	  spi_tx[0] = 0xad;
-	  spi_tx[1] = 0x00;
-	  spi_tx[2] = 0x00;
-	  DWT_Delay(10);
-	  HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_RESET);
-	  HAL_SPI_TransmitReceive(&hspi2, spi_tx, spi_rx, 3, 100);
-	  HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);*/
-
-	  HAL_Delay(10);
-
-
-
-
-
   }
   /* USER CODE END 3 */
 }
@@ -345,10 +237,10 @@ static void MX_DMA_Init(void)
 
   /* DMA interrupt init */
   /* DMA1_Stream3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 3, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
   /* DMA1_Stream4_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 3, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream4_IRQn);
 
 }
@@ -391,78 +283,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = SPI2_ICMU_CS_Pin|SPI2_AS5048_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 4 */
-
-void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
-{
-	HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);
-	positionICMU = spi_rx[1] << 8;
-	//positionICMU = positionICMU << 8;
-	positionICMU |= spi_rx[2];
-}
-
-void encoder_init_ichaus(uint8_t* init_seq){
-
-HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);
-
-if (init_seq == NULL)
-	    {
-	      uint8_t init_seq[6] = {20,20,20,20,20,20};
-	    }
-
-init_seq[0] = (uint8_t)ichausmu_enc.init();
-init_seq[1] = (uint8_t)ichausmu_enc.writeIcMuRegister(CIBM, 0x08);       // set bias current, Determined by firstTimeSetup()
-init_seq[2] = (uint8_t)ichausmu_enc.writeIcMuRegister(LIN, 0x00);       // set the target type as rotative
-init_seq[3] = (uint8_t)ichausmu_enc.writeIcMuRegister(MPC, 0x05);       // magnetic target is a 32master/31Nonius period
-init_seq[4] = (uint8_t)ichausmu_enc.changeSdadMode(0x00, 18, 3);        // define the SDAD output
-init_seq[5] = (uint8_t)ichausmu_enc.setAutomaticGain(true);
-}
-
-
-uint8_t read_pos_ichaus(uint16_t* pos){
-  uint8_t status;
-  uint16_u posICMU;
-  status = (uint8_t)ichausmu_enc.readPos(&posICMU);
-
-  *pos = (uint16_t)posICMU.word;
-
-  return status;
-}
-
-void trig_non_blocking_ichaus_pos_read(){
-
-	//status = (uint8_t)ichausmu_enc.readPos(&posICMU);
-//	spi_tx[0] = 0x97;  For Init
-//	spi_tx[1] = 0x74;
-
-	DWT_Delay(10);
-	HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_RESET);
-	HAL_SPI_TransmitReceive_DMA(&hspi2, spi_tx, spi_rx, 3);
-}
-// Function to select the slave (in this case ic-MU)
-void ChangeCS(bool state)
-{
-
-  if(state)
-	  HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_RESET);
-  else
-	  HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);
- }
-
-// Function to echange data the slave (in this case ic-MU)
-void TransferIcMU(unsigned char* const txBuffer, unsigned char* rxBuffer, const unsigned int bufferLen)
-{
-  //spiExchange(&SPID1, bufferLen, txBuffer, rxBuffer);
-  HAL_SPI_TransmitReceive(&hspi2, txBuffer, rxBuffer, bufferLen, 1);
-
-}
-
-
 
 /* USER CODE END 4 */
 
