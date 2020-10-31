@@ -1,0 +1,17 @@
+as5048a.cpp:6:1:AS5048A::AS5048A(SPI_HandleTypeDef*, GPIO_TypeDef*, uint16_t)	8	static
+as5048a.cpp:35:6:void AS5048A::close()	8	static
+as5048a.cpp:46:6:void AS5048A::open()	8	static
+as5048a.cpp:21:6:void AS5048A::init()	8	static
+as5048a.cpp:56:9:uint8_t AS5048A::spiCalcEvenParity(uint16_t)	0	static
+as5048a.cpp:76:10:uint16_t AS5048A::read(uint16_t)	24	static
+as5048a.cpp:117:10:uint16_t AS5048A::write(uint16_t, uint16_t)	32	static
+as5048a.cpp:168:10:uint16_t AS5048A::getRawRotation()	8	static
+as5048a.cpp:177:5:int AS5048A::getRotation()	8	static
+as5048a.cpp:193:10:uint16_t AS5048A::getState()	8	static
+as5048a.cpp:200:9:uint8_t AS5048A::error()	0	static
+as5048a.cpp:208:9:uint8_t AS5048A::getGain()	8	static
+as5048a.cpp:216:10:uint16_t AS5048A::getErrors()	8	static
+as5048a.cpp:223:6:void AS5048A::setZeroPosition(uint16_t)	0	static
+as5048a.cpp:230:10:uint16_t AS5048A::getZeroPosition()	0	static
+as5048a.cpp:237:7:float AS5048A::normalize(float)	8	static
+as5048a.cpp:255:7:float AS5048A::read2angle(uint16_t)	0	static

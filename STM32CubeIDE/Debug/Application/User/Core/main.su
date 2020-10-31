@@ -1,0 +1,13 @@
+main.cpp:413:6:void ChangeCS(bool)	8	static
+main.cpp:345:13:void MX_GPIO_Init()	64	static
+main.cpp:274:13:void MX_SPI2_Init()	8	static
+main.cpp:312:13:void MX_USART2_UART_Init()	8	static
+main.cpp:423:6:void TransferIcMU(unsigned char*, unsigned char*, unsigned int)	16	static
+main.cpp:444:1:void __static_initialization_and_destruction_0(int, int)	8	static
+main.cpp:93:3:int __io_putchar(int)	16	static
+main.cpp:229:6:void SystemClock_Config()	96	static
+main.cpp:384:6:void encoder_init_ichaus(uint8_t*)	16	static
+main.cpp:402:9:uint8_t read_pos_ichaus(uint16_t*)	16	static
+main.cpp:111:5:int main()	40	static
+main.cpp:438:6:void Error_Handler()	0	static
+main.cpp:444:1:cpp)	8	static

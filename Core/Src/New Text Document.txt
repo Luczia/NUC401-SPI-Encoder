@@ -1,0 +1,8 @@
+#include "test1.h"
+
+
+
+void test5(){
+	int test = 22;
+	test++;
+}
