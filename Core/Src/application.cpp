@@ -56,14 +56,14 @@ void application_main (SPI_HandleTypeDef *hspi){
 	  printf("%.3f \n", posDeg);//, status);
 
 
-	  HAL_Delay(10);
+	  HAL_Delay(100);
   }
 }
 
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 {
-	HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(SPI_ICMU_CS_GPIO_Port, SPI_ICMU_CS_Pin, GPIO_PIN_SET);
 	positionICMU = spi_rx[1] << 8;
 	positionICMU |= spi_rx[2];
 }
@@ -71,7 +71,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)
 
 void encoder_init_ichaus(uint8_t* init_seq_status){
 
-HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);
+HAL_GPIO_WritePin(SPI_ICMU_CS_GPIO_Port, SPI_ICMU_CS_Pin, GPIO_PIN_SET);
 
 if (init_seq_status == NULL)
 	    {
@@ -102,7 +102,7 @@ uint8_t read_pos_ichaus(uint16_t* pos){
 void trig_non_blocking_ichaus_pos_read(){
 
 	DWT_Delay(10);
-	HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(SPI_ICMU_CS_GPIO_Port, SPI_ICMU_CS_Pin, GPIO_PIN_RESET);
 	HAL_SPI_TransmitReceive_DMA(hspi_enc, spi_tx, spi_rx, 3);
 }
 
@@ -110,9 +110,9 @@ void trig_non_blocking_ichaus_pos_read(){
 void ChangeCS(bool state)
 {
   if(state)
-	  HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(SPI_ICMU_CS_GPIO_Port, SPI_ICMU_CS_Pin, GPIO_PIN_RESET);
   else
-	  HAL_GPIO_WritePin(SPI2_ICMU_CS_GPIO_Port, SPI2_ICMU_CS_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(SPI_ICMU_CS_GPIO_Port, SPI_ICMU_CS_Pin, GPIO_PIN_SET);
 }
 
 // Function to exchange data the slave (in this case ic-MU)
