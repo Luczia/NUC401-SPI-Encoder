@@ -1,7 +1,7 @@
 # NUC401-SPI-Encoder
 
 # Description:  
-Simple program to test the SPI communication between a nucleo f401 with AS5048 and icMU.
+Simple program to test the SPI communication between a Nucleo F401 with AS5048 and icMU.
 
 It includes DWT (to enable delays in µsecondsm as well as UART communication and SPI non-blocking call though DMA transfers). It rests upon CubeMX ennvironment. 
 The code is architectured to enable cpp compilation (as it uses C++ libraies) in root mode (STM32CubeIDE file system compatible with MC-SDK)
@@ -22,6 +22,6 @@ Wire the sensor on SPIv3 of the nucleo board :
 <img alt="schematics" src="media/Schematics.png" width="400" >
 <img alt="picture" src="media/Picture.jpg" width="400" >
 
-Import this repository in your CubeIDE (or in eclipse configured for embedded devlopement)
+Import this repository in your CubeIDE (or in eclipse configured for embedded devlopement):  
 File > Import > General > Exisiting Projetc In Workspace > Next > Finish
 
