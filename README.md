@@ -20,8 +20,8 @@ Last commit tested on STM32CubeIDE version : 1.9.0
 #How to use :
 
 Wire the sensor on SPIv3 of the nucleo board :
-<img alt="schematics" src="Schematics.png" width="400" >
-<img alt="picture" src="Picture.jpg" width="400" >
+<img alt="schematics" src="media/Schematics.png" width="400" >
+<img alt="picture" src="media/Picture.jpg" width="400" >
 
 Import this repository in your CubeIDE (or in eclipse configured for embedded devlopement)
 File > Import > General > Exisiting Projetc In Workspace > Next > Finish
