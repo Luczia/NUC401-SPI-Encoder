@@ -1,5 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
+# Toolchain: GNU Tools for STM32 (10.3-2021.10)
 ################################################################################
 
 -include ../makefile.init
@@ -13,7 +14,6 @@ RM := rm -rf
 -include Application/User/Utils/Src/subdir.mk
 -include Application/User/Startup/subdir.mk
 -include Application/User/Core/subdir.mk
--include subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -45,9 +45,23 @@ endif
 
 -include ../makefile.defs
 
+OPTIONAL_TOOL_DEPS := \
+$(wildcard ../makefile.defs) \
+$(wildcard ../makefile.init) \
+$(wildcard ../makefile.targets) \
+
+
+BUILD_ARTIFACT_NAME := CubeMx_SPI_AS5048
+BUILD_ARTIFACT_EXTENSION := elf
+BUILD_ARTIFACT_PREFIX :=
+BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
+
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
 CubeMx_SPI_AS5048.elf \
+
+MAP_FILES += \
+CubeMx_SPI_AS5048.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
@@ -55,42 +69,43 @@ default.size.stdout \
 OBJDUMP_LIST += \
 CubeMx_SPI_AS5048.list \
 
-OBJCOPY_BIN += \
-CubeMx_SPI_AS5048.bin \
-
 
 # All Target
-all: CubeMx_SPI_AS5048.elf secondary-outputs
+all: main-build
+
+# Main-build Target
+main-build: CubeMx_SPI_AS5048.elf secondary-outputs
 
 # Tool invocations
-CubeMx_SPI_AS5048.elf: $(OBJS) $(USER_OBJS) C:\Users\Luczia\STM32CubeIDE\workspace_1.3.0\oxio_esc\CubeMx_SPI_AS5048\STM32CubeIDE\STM32F401RETX_FLASH.ld
-	arm-none-eabi-g++ -o "CubeMx_SPI_AS5048.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Luczia\STM32CubeIDE\workspace_1.3.0\oxio_esc\CubeMx_SPI_AS5048\STM32CubeIDE\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CubeMx_SPI_AS5048.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+CubeMx_SPI_AS5048.elf CubeMx_SPI_AS5048.map: $(OBJS) $(USER_OBJS) C:\Users\Luczia\STM32CubeIDE\workspace_1.9.0\NUC401-SPI-Encoder\STM32CubeIDE\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "CubeMx_SPI_AS5048.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Luczia\STM32CubeIDE\workspace_1.9.0\NUC401-SPI-Encoder\STM32CubeIDE\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CubeMx_SPI_AS5048.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-default.size.stdout: $(EXECUTABLES)
+default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-size  $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-CubeMx_SPI_AS5048.list: $(EXECUTABLES)
+CubeMx_SPI_AS5048.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "CubeMx_SPI_AS5048.list"
-	@echo 'Finished building: $@'
-	@echo ' '
-
-CubeMx_SPI_AS5048.bin: $(EXECUTABLES)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "CubeMx_SPI_AS5048.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) *
+	-$(RM) CubeMx_SPI_AS5048.elf CubeMx_SPI_AS5048.list CubeMx_SPI_AS5048.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
-.PHONY: all clean dependents
-.SECONDARY:
+fail-specified-linker-script-missing:
+	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
+	@exit 2
+
+warn-no-linker-script-specified:
+	@echo 'Warning: No linker script specified. Check the linker settings in the build configuration.'
+
+.PHONY: all clean dependents main-build fail-specified-linker-script-missing warn-no-linker-script-specified
 
 -include ../makefile.targets

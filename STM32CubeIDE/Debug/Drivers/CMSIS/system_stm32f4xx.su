@@ -1,2 +1,2 @@
-system_stm32f4xx.c:150:6:SystemInit	0	static
-system_stm32f4xx.c:205:6:SystemCoreClockUpdate	0	static
+C:/Users/Luczia/STM32CubeIDE/workspace_1.9.0/NUC401-SPI-Encoder/Core/Src/system_stm32f4xx.c:150:6:SystemInit	0	static
+C:/Users/Luczia/STM32CubeIDE/workspace_1.9.0/NUC401-SPI-Encoder/Core/Src/system_stm32f4xx.c:205:6:SystemCoreClockUpdate	0	static

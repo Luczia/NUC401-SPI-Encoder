@@ -53,7 +53,7 @@ void application_main (SPI_HandleTypeDef *hspi){
 	  DWT_Delay(100); //Let the time to read the latest info | Can be removed when further code will be added
 	  float posDeg = positionICMU*360/65536.0;
 
-	  printf("%.3f \n", posDeg);//, status);
+	  printf("%.3f \r\n", posDeg);//, status);
 
 
 	  HAL_Delay(100);
@@ -81,7 +81,8 @@ if (init_seq_status == NULL)
 init_seq_status[0] = (uint8_t)ichausmu_enc.init();
 init_seq_status[1] = (uint8_t)ichausmu_enc.writeIcMuRegister(CIBM, 0x08);       // set bias current, Determined by firstTimeSetup()
 init_seq_status[2] = (uint8_t)ichausmu_enc.writeIcMuRegister(LIN, 0x00);       // set the target type as rotative
-init_seq_status[3] = (uint8_t)ichausmu_enc.writeIcMuRegister(MPC, 0x05);       // magnetic target is a 32master/31Nonius period
+//init_seq_status[3] = (uint8_t)ichausmu_enc.writeIcMuRegister(MPC, 0x05);       // magnetic target is a 32master/31Nonius period
+init_seq_status[3] = (uint8_t)ichausmu_enc.writeIcMuRegister(MPC, 0x06);       // magnetic target is a 64master period
 init_seq_status[4] = (uint8_t)ichausmu_enc.changeSdadMode(0x00, 18, 3);        // define the SDAD output
 init_seq_status[5] = (uint8_t)ichausmu_enc.setAutomaticGain(true);
 }
