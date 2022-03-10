@@ -19,7 +19,7 @@ Last commit tested on STM32CubeIDE version : 1.9.0
 
 #How to use :
 
-Wire the sensor on SPIv3 of the nucleo board :
+Wire the sensor on SPIv3 of the nucleo board :  
 <img alt="schematics" src="media/Schematics.png" width="400" >
 <img alt="picture" src="media/Picture.jpg" width="400" >
 
